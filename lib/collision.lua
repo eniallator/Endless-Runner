@@ -12,7 +12,7 @@ collision.aabb = function(box1, box2)
   end
 end
 
-collision.playerToBuilding = function(functionMode)
+collision.playerToPlatform = function(functionMode)
   local playerBox = {
     x = player.pos.x,
     y = player.pos.y + player.velY,
@@ -22,16 +22,17 @@ collision.playerToBuilding = function(functionMode)
 
   local offset = 0
 
-  for i=1, #map.buildings do
-    local buildingBox = {
+  for i=1, #map.platforms do
+    local platform = map.platforms[i]
+    local platformBox = {
       x = - map.progress + offset,
-      y = screenDim.y - map.buildings[i].h,
-      w = map.buildings[i].w,
-      h = map.buildings[i].h
+      y = screenDim.y - platform.h,
+      w = platform.w,
+      h = platform.h
     }
-    offset = offset + map.buildings[i].w + screenDim.x / 9
+    offset = offset + platform.w + screenDim.x / 9
 
-    if collision.aabb(playerBox, buildingBox) and functionMode(buildingBox.y) then
+    if collision.aabb(playerBox, platformBox) and functionMode(platformBox.y) then
       return true
     end
   end

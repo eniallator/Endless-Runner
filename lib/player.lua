@@ -21,11 +21,11 @@ local function updateMovement()
   player.velY = player.velY + 0.9
   player.onGround = false
 
-  if collision.playerToBuilding(function(buildingY) return player.pos.y + player.dim.h < buildingY end) then
+  if collision.playerToPlatform(function(platformY) return player.pos.y + player.dim.h < platformY end) then
     player.velY = 0
     player.onGround = true
 
-  elseif collision.playerToBuilding(function() return true end) then
+  elseif collision.playerToPlatform(function() return true end) then
     gameOver = true
 
   elseif player.pos.y + player.velY > screenDim.y - player.dim.h then
@@ -42,7 +42,7 @@ end
 
 player.update = function()
   if not player.pos.y then
-    player.pos.y = screenDim.y - map.buildings[1].h - player.dim.h - 5
+    player.pos.y = screenDim.y - map.platforms[1].h - player.dim.h - 5
   end
 
   getInput()
