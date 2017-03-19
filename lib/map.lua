@@ -16,7 +16,7 @@ end
 local function cullBuildings()
   while map.buildings[1] and map.buildings[1].w - map.progress < 0 do
     table.remove(map.buildings, 1)
-    map.progress = - screenDim.x / 9
+    map.progress = - screenDim.x / 6
   end
 end
 
@@ -41,8 +41,8 @@ map.draw = function()
     print()
 
     love.graphics.setColor(0, 255, 0)
-    love.graphics.rectangle("fill", -map.progress + offset, screenDim.y - building.h, building.w, building.h)
-    offset = offset + building.w + screenDim.x / 9
+    love.graphics.rectangle("fill", - map.progress + offset, screenDim.y - building.h, building.w, building.h)
+    offset = offset + building.w + screenDim.x / 6
   end
 end
 

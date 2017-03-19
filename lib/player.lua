@@ -1,7 +1,9 @@
+local collision = require "lib.collision"
+
 local player = {}
 
 player.dim = {w = screenDim.y / 37.5, h = screenDim.y / 18.75}
-player.pos = {x = screenDim.x / 5, y = screenDim.y - player.dim.h}
+player.pos = {x = screenDim.x / 5}
 player.velY = 0
 player.jumpSpeed = -17
 
@@ -19,7 +21,14 @@ local function updateMovement()
   player.velY = player.velY + 0.9
   player.onGround = false
 
-  if player.pos.y + player.velY > screenDim.y - player.dim.h then
+  if collision.playerToBuilding(function(buildingY) return player.pos.y + player.dim.h < buildingY end) then
+    player.velY = 0
+    player.onGround = true
+
+  elseif collision.playerToBuilding(function() return true end) then
+    gameOver = true
+
+  elseif player.pos.y + player.velY > screenDim.y - player.dim.h then
     player.velY = 0
     player.onGround = true
 
@@ -32,6 +41,10 @@ local function updateMovement()
 end
 
 player.update = function()
+  if not player.pos.y then
+    player.pos.y = screenDim.y - map.buildings[1].h - player.dim.h - 5
+  end
+
   getInput()
   updateMovement()
 end

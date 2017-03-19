@@ -7,8 +7,10 @@ function love.load()
 end
 
 function love.update()
-  map.update()
-  player.update()
+  if not gameOver then
+    map.update()
+    player.update()
+  end
 end
 
 function love.draw()
