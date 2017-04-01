@@ -1,5 +1,5 @@
 local map = {}
-map.moveSpeed = 10
+map.moveSpeed = 15
 map.platforms = {}
 map.progress = 0
 local noiseX = 0
@@ -38,7 +38,6 @@ map.draw = function()
 
   for i=1, #map.platforms do
     local platform = map.platforms[i]
-    print()
 
     love.graphics.setColor(0, 255, 0)
     love.graphics.rectangle("fill", - map.progress + offset, screenDim.y - platform.h, platform.w, platform.h)

@@ -7,18 +7,19 @@ player.pos = {x = screenDim.x / 5}
 player.velY = 0
 player.jumpSpeed = -17
 
-local jumpHeld = false
+local gravity = 1
+local jumpHeld
 
 local function getInput(dt)
   if love.keyboard.isDown('space') and not jumpHeld and player.onGround then
     player.velY = player.velY + player.jumpSpeed
   end
 
-  jumpHeld =love.keyboard.isDown('space')
+  jumpHeld = love.keyboard.isDown('space')
 end
 
 local function updateMovement()
-  player.velY = player.velY + 0.9
+  player.velY = player.velY + gravity
   player.onGround = false
 
   if collision.playerToPlatform(function(platformY) return player.pos.y + player.dim.h < platformY end) then
@@ -42,7 +43,7 @@ end
 
 player.update = function()
   if not player.pos.y then
-    player.pos.y = screenDim.y - map.platforms[1].h - player.dim.h - 5
+    player.pos.y = screenDim.y - map.platforms[1].h - player.dim.h - 1
   end
 
   getInput()
